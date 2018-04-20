@@ -10,10 +10,10 @@ class RoomsTest < MiniTest::Test
     @song1  = Song.new("Yellow")
     @song2  = Song.new("American Idiot")
     @song3  = Song.new("Basket case")
-    @guest1 = Guest.new("Luis T", "Yellow", 20)
-    @guest2 = Guest.new("Peter J", "Thunder", 20)
-    @guest3 = Guest.new("Andreu", "RadioActive", 20)
-    @guest4 = Guest.new("Andreu", "RadioActive", 2)
+    @guest1 = Guest.new("Luis T", @song1, 20)
+    @guest2 = Guest.new("Peter J", @song2, 20)
+    @guest3 = Guest.new("Andreu", @song3, 20)
+    @guest4 = Guest.new("Andreu", @song2, 2)
     @room1  = Room.new("Cool room", 2, 8)
   end
 
@@ -71,16 +71,18 @@ assert_equal(false, @room1.check_if_space_available)
 end
 
 def test_add_money_till
-  @room1.add_money(@room1.fee)
+  @room1.add_money
   assert_equal(8, @room1.till)
 end
 
 
 def test_sell_ticket__true
+@room1.add_song(@song1)
 @room1.sell_ticket(@guest1)
 assert_equal(8, @room1.till)
 assert_equal(12, @guest1.wallet)
 assert_equal(1, @room1.people_in.length)
+assert_equal("yaasss my fav song is here!", @guest1.check_if_song(@room1))
 end
 
 def test_sell_ticket__false

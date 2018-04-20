@@ -39,17 +39,18 @@ end
     end
   end
 
-  def add_money(room_fee)
-    @till += room_fee
+  def add_money
+    @till += @fee
   end
 
 
 
   def sell_ticket(customer)
     if customer.can_afford(self) && check_if_space_available
-      @till += @fee
+      add_money
       customer.remove_money(@fee)
       add_people(customer)
+      customer.check_if_song(self)
     elsif customer.can_afford(self) == false
       "Sorry you dont have enough money!"
     elsif check_if_space_available == false

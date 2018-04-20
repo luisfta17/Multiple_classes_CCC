@@ -1,3 +1,5 @@
+require 'pry'
+
 class Guest
 attr_reader(:name, :fav_song, :wallet)
 
@@ -19,6 +21,15 @@ def can_afford(room)
       return false
     end
   end
+
+def check_if_song(room)
+  # binding.pry
+  if room.music.include?(@fav_song)
+    "yaasss my fav song is here!"
+  else
+    "ohhh :( I dont see my fav song"
+  end
+end
 
 
 end
