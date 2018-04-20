@@ -13,6 +13,7 @@ class RoomsTest < MiniTest::Test
     @guest1 = Guest.new("Luis T", "Yellow", 20)
     @guest2 = Guest.new("Peter J", "Thunder", 20)
     @guest3 = Guest.new("Andreu", "RadioActive", 20)
+    @guest4 = Guest.new("Andreu", "RadioActive", 2)
     @room1  = Room.new("Cool room", 2, 8)
   end
 
@@ -86,8 +87,25 @@ def test_sell_ticket__false
   @room1.add_people(@guest2)
   @room1.add_people(@guest3)
   @room1.sell_ticket(@guest1)
-
 assert_equal(2, @room1.people_in.length)
+assert_equal(0, @room1.till)
+assert_equal(20, @guest1.wallet)
+end
+
+def test_sell_ticket__false
+  @room1.add_people(@guest2)
+  @room1.add_people(@guest3)
+assert_equal("Sorry there is not more space in this room!", @room1.sell_ticket(@guest1))
+assert_equal(2, @room1.people_in.length)
+assert_equal(0, @room1.till)
+assert_equal(20, @guest1.wallet)
+end
+
+def test_sell_ticket__no_money
+assert_equal("Sorry you dont have enough money!", @room1.sell_ticket(@guest4))
+assert_equal(0, @room1.people_in.length)
+assert_equal(0, @room1.till)
+assert_equal(2, @guest4.wallet)
 end
 
 end

@@ -50,6 +50,10 @@ end
       @till += @fee
       customer.remove_money(@fee)
       add_people(customer)
+    elsif customer.can_afford(self) == false
+      "Sorry you dont have enough money!"
+    elsif check_if_space_available == false
+      "Sorry there is not more space in this room!"
     end
   end
 
